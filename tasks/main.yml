@@ -7,8 +7,8 @@
 - name: tell the host about our servers it might want to ssh to
   known_hosts:
     path: /root/.ssh/known_hosts
-    name: "{{sshmount_item.remotehost}}"
-    key: "{{ lookup('pipe', 'ssh-keyscan {{sshmount_item.remotehost}} 2>/dev/null') }}"
+    name: "{{ sshmount_item.remotehost }}"
+    key: "{{ lookup('pipe', 'ssh-keyscan {{ sshmount_item.remotehost }} 2>/dev/null') }}"
   loop: "{{ servermounts if servermounts is defined else [] }}"
   when:
     - servermounts is defined
@@ -18,10 +18,10 @@
 
 - name: add mountpoints
   mount:
-    path: "{{mount_item.mountpoint}}"
-    src: "{{mount_item.dev}}"
-    fstype: "{{mount_item.fstype}}"
-    opts: "{{mount_item.opts}}"
+    path: "{{ mount_item.mountpoint }}"
+    src: "{{ mount_item.dev }}"
+    fstype: "{{ mount_item.fstype }}"
+    opts: "{{ mount_item.opts }}"
     state: mounted
   loop: "{{ servermounts if servermounts is defined else [] }}"
   when:
